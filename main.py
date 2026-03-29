@@ -8,10 +8,10 @@ load_dotenv()
 
 app = FastAPI()
 
-VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "luis123")
-WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
-PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
-GRAPH_API_VERSION = os.getenv("GRAPH_API_VERSION", "v25.0")
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "luis123").strip()
+WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN", "").strip()
+PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID", "").strip()
+GRAPH_API_VERSION = os.getenv("GRAPH_API_VERSION", "v25.0").strip()
 
 
 def parse_whatsapp_messages(body: dict) -> list[dict]:
