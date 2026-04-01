@@ -1,10 +1,5 @@
-import os
 import httpx
-
-WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
-PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
-GRAPH_API_VERSION = os.getenv("GRAPH_API_VERSION", "v25.0")
-
+from app.config import WHATSAPP_TOKEN, PHONE_NUMBER_ID, GRAPH_API_VERSION
 
 async def send_whatsapp_text(to: str, message: str):
     if not WHATSAPP_TOKEN or not PHONE_NUMBER_ID:
