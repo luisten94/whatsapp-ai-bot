@@ -30,10 +30,16 @@ async def receive_webhook(request: Request):
     for msg in messages:
         if msg["type"] == "text" and msg["text"]:
             try:
-                reply = build_reply(msg["text"])
+                reply = await build_reply(msg["text"])
                 await send_whatsapp_text(to=msg["from"], message=reply)
             except Exception as e:
                 print("=== ERROR SENDING WHATSAPP MESSAGE ===")
                 print(str(e))
 
     return JSONResponse({"status": "ok", "messages": messages})
+
+@app.get("/test-reply")
+async def test_reply():
+    text = "Hola"
+    reply = build_reply(text)
+    return {'input': text, 'reply': reply}
