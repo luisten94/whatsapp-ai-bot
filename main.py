@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import PlainTextResponse, JSONResponse
-from app.config import VERIFY_TOKEN
-from app.normalize import parse_whatsapp_messages
-from app.whatsapp import send_whatsapp_text
-from app.logic import build_reply
+from config import VERIFY_TOKEN
+from normalize import parse_whatsapp_messages
+from whatapp import send_whatsapp_text
+from logic import build_reply
 
 app = FastAPI()
 
