@@ -1,7 +1,7 @@
 from app.services.inventory_service import find_in_stock_product_by_name
 
 
-async def buil_reply(user_text: str) -> str:
+async def build_reply(user_text: str) -> str:
     text = (user_text or "").strip().lower()
 
     if any(word in text for word in ["asesor", "humano", "persona", "agente", "soporte"]):
