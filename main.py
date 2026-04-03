@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import PlainTextResponse, JSONResponse
+
 from config import VERIFY_TOKEN
 from normalize import parse_whatsapp_messages
 from whatapp import send_whatsapp_text
@@ -7,9 +8,11 @@ from logic import build_reply
 
 app = FastAPI()
 
+
 @app.get("/")
 async def root():
     return {"status": "running"}
+
 
 @app.get("/webhook")
 async def verify_webhook(request: Request):
@@ -22,15 +25,16 @@ async def verify_webhook(request: Request):
 
     raise HTTPException(status_code=403, detail="Invalid verify token")
 
+
 @app.post("/webhook")
 async def receive_webhook(request: Request):
     body = await request.json()
     messages = parse_whatsapp_messages(body)
 
     for msg in messages:
-        if msg["type"] == "text" and msg["text"]:
+        if msg.get("type") == "text" and msg.get("text"):
             try:
-                reply = await build_reply(msg["text"])
+                reply = build_reply(msg["text"])
                 await send_whatsapp_text(to=msg["from"], message=reply)
             except Exception as e:
                 print("=== ERROR SENDING WHATSAPP MESSAGE ===")
@@ -38,8 +42,9 @@ async def receive_webhook(request: Request):
 
     return JSONResponse({"status": "ok", "messages": messages})
 
+
 @app.get("/test-reply")
 async def test_reply():
     text = "Hola"
     reply = build_reply(text)
-    return {'input': text, 'reply': reply}
+    return {"input": text, "reply": reply}
